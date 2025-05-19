@@ -1,7 +1,5 @@
 import { deepseek } from '@ai-sdk/deepseek';
 import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
 import { codeReviewTool } from '../tools/codeReviewTool';
 
 export const codeReviewAgent = new Agent({
@@ -23,17 +21,5 @@ export const codeReviewAgent = new Agent({
   `,
   // 在这里使用了导入进来的 deepseek 函数
   model: deepseek('deepseek-chat'),
-  tools: { codeReviewTool },
-  memory: new Memory({
-    storage: new LibSQLStore({
-      url: 'file:../mastra.db',
-    }),
-    options: {
-      lastMessages: 10,
-      semanticRecall: false,
-      threads: {
-        generateTitle: false,
-      },
-    },
-  }),
+  tools: { codeReviewTool }
 });
